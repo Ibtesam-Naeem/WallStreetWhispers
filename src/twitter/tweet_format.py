@@ -12,7 +12,7 @@ def daily_premkt_earnings_tweet(earnings_list):
         tweet += f"  EPS estimate: {stock['EPS Estimate']}\n"
         tweet += f"  Revenue estimate: {stock['Revenue Forecast']}\n\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def daily_afterhrs_earnings_tweet(earnings_list):
     """
@@ -28,7 +28,7 @@ def daily_afterhrs_earnings_tweet(earnings_list):
         tweet += f"  EPS estimate: {stock['EPS Estimate']}\n"
         tweet += f"  Revenue estimate: {stock['Revenue Forecast']}\n\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def econ_reminder_tomorrow(econ_list):
     """
@@ -42,7 +42,7 @@ def econ_reminder_tomorrow(econ_list):
     for event in econ_list:
         tweet += f"- {event['Event']}\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def econ_reminder_weekly(econ_list):
     """
@@ -56,7 +56,7 @@ def econ_reminder_weekly(econ_list):
     for event in econ_list:
         tweet += f"- {event['Event']}\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def pre_market_gainer(gainers_list):
     """
@@ -70,7 +70,7 @@ def pre_market_gainer(gainers_list):
     for stock in gainers_list[:10]:
         tweet += f"- {stock['Ticker']} last up {stock['Pre-Market Change']}\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def pre_market_losers(losers_list):
     """
@@ -84,81 +84,7 @@ def pre_market_losers(losers_list):
     for stock in losers_list[:10]:
         tweet += f"- {stock['Ticker']} last down {stock['Pre-Market Change']}\n"
 
-    return tweet.strip()
-
-def week_high_52(high_list):
-    """
-    Formats the 52-Week Highs tweet.
-    """
-    if not high_list:
-        return "No stocks hitting new 52-week highs today."
-
-    tweet = "All these stocks hit a 52 WEEK HIGH at some point today\n\n"
-
-    for stock in high_list[:10]:
-        tweet += f"- {stock['Ticker']}\n"
-
-    return tweet.strip()
-
-def week_low_52(low_list):
-    """
-    Formats the 52-Week Lows tweet.
-    """
-    if not low_list:
-        return "No stocks hitting new 52-week lows today."
-
-    tweet = "All these stocks hit a 52 WEEK LOW at some point today\n\n"
-
-    for stock in low_list[:10]:
-        tweet += f"- {stock['Ticker']}\n"
-
-    return tweet.strip()
-
-def all_time_high(high_list):
-    """
-    Formats the All-Time Highs tweet.
-    """
-    if not high_list:
-        return "No stocks reaching all-time highs today."
-
-    tweet = "All these stocks hit ALL TIME HIGHS at some point today\n\n"
-
-    for stock in high_list[:10]:
-        tweet += f"- {stock['Ticker']}\n"
-
-    return tweet.strip()
-
-def pre_market_gap(gap_list):
-    """
-    Fromats the pre-market Gap tweet
-    """
-    if not gap_list:
-        return "No stocks gapping today."
-    
-    tweet = "Stocks gapping up:"
-
-    for stock in gap_list[:10]:
-        tweet += f"- {stock['Ticker']} gapping up {stock['Pre-Market Change']}"
-
-    return tweet.strip()
-
-def kitty_posted(meme_list):
-    """
-    Formats a tweet when Roaring Kitty posts,
-    displaying meme stock movements.
-    """
-    if not meme_list:
-        return "No memes today"
-
-    tweet = "ROARING KITTY HAS RETURNED\n"
-    tweet += "MEME STOCKS ARE MOVINGGGGG\n\n"
-
-    for stock in meme_list:
-        tweet += f"${stock['ticker']} IS UP {stock['price_change']}% IN OVERNIGHT TRADING!!!\n"
-
-    tweet += "\nWHO HERE STILL GOT DIAMONDS HANDS???"
-
-    return tweet.strip()
+    print (tweet)
 
 def fear_sentiment(greed_data):
     """
@@ -167,7 +93,6 @@ def fear_sentiment(greed_data):
     if not greed_data:
         return "Not available"
 
-    # Handle both list and dictionary formats
     if isinstance(greed_data, list):
         if len(greed_data) == 0:
             return "Not available"
@@ -183,24 +108,7 @@ def fear_sentiment(greed_data):
     tweet += f"Fear & Greed Score: {fear_value}\n\n"
     tweet += "How do you feel about the market? 📉📈"
 
-    return tweet.strip()
-
-def daily_market_summary(market_data):
-    """
-    Formats a tweet for the daily closing
-    prices of S&P 500 and Dow Jones.
-    """
-    if not market_data:
-        return "Market data unavailable for today."
-
-    sp500 = market_data.get("S&P 500", {})
-    dow = market_data.get("Dow Jones", {})
-
-    tweet = "As of closing, the S&P 500 finished "
-    tweet += f"{sp500.get('Direction', 'unchanged')} {sp500.get('Percent Change', 'N/A')}% at ${sp500.get('Close', 'N/A')}.\n"
-    tweet += f"The Dow Jones ended {dow.get('Direction', 'unchanged')} {dow.get('Percent Change', 'N/A')}% at ${dow.get('Close', 'N/A')}."
-
-    return tweet.strip()
+    print (tweet)
 
 def weekly_market_summary(weekly_data):
     """
@@ -217,7 +125,7 @@ def weekly_market_summary(weekly_data):
     tweet += f"{sp500.get('Weekly Direction', 'unchanged')} {sp500.get('Weekly Percent Change', 'N/A')}%, closing at ${sp500.get('Friday Close', 'N/A')}.\n"
     tweet += f"The Dow Jones finished the week {dow.get('Weekly Direction', 'unchanged')} {dow.get('Weekly Percent Change', 'N/A')}%, ending at ${dow.get('Friday Close', 'N/A')}."
 
-    return tweet.strip()
+    print (tweet)
 
 def closures(closing_dates):
     """
@@ -228,5 +136,5 @@ def closures(closing_dates):
     
     tweet = f"The Stock Market is closed tomorrow for {closing_dates}."
 
-    return tweet.strip()
+    print (tweet)
 
