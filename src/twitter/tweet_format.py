@@ -12,7 +12,7 @@ def daily_premkt_earnings_tweet(earnings_list):
         tweet += f"  EPS estimate: {stock['EPS Estimate']}\n"
         tweet += f"  Revenue estimate: {stock['Revenue Forecast']}\n\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def daily_afterhrs_earnings_tweet(earnings_list):
     """
@@ -28,7 +28,7 @@ def daily_afterhrs_earnings_tweet(earnings_list):
         tweet += f"  EPS estimate: {stock['EPS Estimate']}\n"
         tweet += f"  Revenue estimate: {stock['Revenue Forecast']}\n\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def econ_reminder_tomorrow(econ_list):
     """
@@ -42,7 +42,7 @@ def econ_reminder_tomorrow(econ_list):
     for event in econ_list:
         tweet += f"- {event['Event']}\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def econ_reminder_weekly(econ_list):
     """
@@ -56,7 +56,7 @@ def econ_reminder_weekly(econ_list):
     for event in econ_list:
         tweet += f"- {event['Event']}\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def pre_market_gainer(gainers_list):
     """
@@ -70,7 +70,7 @@ def pre_market_gainer(gainers_list):
     for stock in gainers_list[:10]:
         tweet += f"- {stock['Ticker']} last up {stock['Pre-Market Change']}\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def pre_market_losers(losers_list):
     """
@@ -84,7 +84,7 @@ def pre_market_losers(losers_list):
     for stock in losers_list[:10]:
         tweet += f"- {stock['Ticker']} last down {stock['Pre-Market Change']}\n"
 
-    return tweet.strip()
+    print (tweet)
 
 def fear_sentiment(greed_data):
     """
@@ -108,7 +108,7 @@ def fear_sentiment(greed_data):
     tweet += f"Fear & Greed Score: {fear_value}\n\n"
     tweet += "How do you feel about the market? 📉📈"
 
-    return tweet.strip()
+    print (tweet)
 
 def weekly_market_summary(weekly_data):
     """
@@ -125,7 +125,7 @@ def weekly_market_summary(weekly_data):
     tweet += f"{sp500.get('Weekly Direction', 'unchanged')} {sp500.get('Weekly Percent Change', 'N/A')}%, closing at ${sp500.get('Friday Close', 'N/A')}.\n"
     tweet += f"The Dow Jones finished the week {dow.get('Weekly Direction', 'unchanged')} {dow.get('Weekly Percent Change', 'N/A')}%, ending at ${dow.get('Friday Close', 'N/A')}."
 
-    return tweet.strip()
+    print (tweet)
 
 def closures(closing_dates):
     """
@@ -136,5 +136,5 @@ def closures(closing_dates):
     
     tweet = f"The Stock Market is closed tomorrow for {closing_dates}."
 
-    return tweet.strip()
+    print (tweet)
 

@@ -204,8 +204,8 @@ def post_weekly_econ_tweet():
             weekly_events = []
             for event in economic_events:
                 if "Date" in event:
-                    # Parse the date string (assuming ISO format)
-                    event_date_str = event["Date"].split("T")[0]  # Extract date part
+                    # Parse the date string
+                    event_date_str = event["Date"].split("T")[0]  
                     event_date = datetime.strptime(event_date_str, "%Y-%m-%d").date()
                     
                     # Include events from tomorrow to one week later
