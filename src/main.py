@@ -105,7 +105,7 @@ def post_pre_market_earnings_tweet():
     and sends it. Scheduled for 4:00 AM.
     """
     try:
-        today = "2025-03-20"
+        today = datetime.today().strftime('%Y-%m-%d')
 
         earnings_data = get_earnings(limit=50)
         
@@ -132,7 +132,7 @@ def post_after_hours_earnings_tweet():
     and sends it. Scheduled for 4:00 PM.
     """
     try:
-        today = "2025-03-20"
+        today = datetime.today().strftime('%Y-%m-%d')
 
         earnings_data = get_earnings(limit=50)
         
@@ -192,7 +192,7 @@ def post_weekly_econ_tweet():
     Scheduled for 1:17 AM (Sunday).
     """
     try:
-        economic_events = get_economic_events(limit=50)  # Get more events for the week
+        economic_events = get_economic_events(limit=50) 
         
         # Filter events for the upcoming week
         from datetime import datetime, timedelta
@@ -298,3 +298,4 @@ if __name__ == "__main__":
     while True:
         schedule.run_pending()
         time.sleep(30)
+
