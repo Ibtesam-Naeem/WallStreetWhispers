@@ -1,3 +1,5 @@
+#---------------------BACKEND API CLIENT---------------------#
+
 import os
 import requests
 from typing import List, Dict, Any
@@ -7,7 +9,7 @@ load_dotenv()
 
 BACKEND_URL = os.getenv("BACKEND_URL")
 
-def get_economic_events(limit: int = 10) -> List[Dict[str, Any]]:
+def get_economic_events(limit: int = 10):
     """
     Get the economic events from the backend API
     """
@@ -18,7 +20,7 @@ def get_economic_events(limit: int = 10) -> List[Dict[str, Any]]:
     except Exception as e:
         raise Exception(f"Failed to fetch economic events: {e}")
 
-def get_earnings(limit: int = 10) -> List[Dict[str, Any]]:
+def get_earnings(limit: int = 10):
     """
     Get earnings data from the backend API
     """
@@ -30,7 +32,7 @@ def get_earnings(limit: int = 10) -> List[Dict[str, Any]]:
     except Exception as e:
         raise Exception(f"Failed to fetch earnings: {e}")
 
-def get_fear_greed() -> Dict[str, Any]:
+def get_fear_greed():
     """
     Get fear & greed index from the backend API
     """
@@ -47,7 +49,7 @@ def get_fear_greed() -> Dict[str, Any]:
     except Exception as e:
         raise Exception(f"Failed to fetch fear & greed index: {e}")
 
-def get_trading_holidays() -> List[Dict[str, Any]]:
+def get_trading_holidays():
     """
     Gets the trading holidays from the backend API
     """
@@ -58,3 +60,4 @@ def get_trading_holidays() -> List[Dict[str, Any]]:
     
     except Exception as e:
         raise Exception(f"Failed to fetch trading holidays: {e}") 
+    
