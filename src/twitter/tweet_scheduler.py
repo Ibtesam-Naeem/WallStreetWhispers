@@ -15,14 +15,10 @@ from config.backend_api import (
     get_trading_holidays
 )
 
-from data.polygon_financials import polygon, get_top_stocks
-from data.sec_results import get_sec_financial_data
-
 from twitter.tweet_formatting import (
     premarket_earnings_tweet,
     afterhrs_earnings_tweet,
     earnings_results,
-    sec_tweet_thread,
     econ_reminder_tomorrow,
     econ_reminder_weekly,
     fear_sentiment,
@@ -198,94 +194,28 @@ def post_after_hours_earnings_tweet():
         log_context="After-Hours"
     )
 
-# ---------------------------- FINANCIAL THREADS ----------------------------
-def post_polygon_threads():
-    """
-    Posts the threads of the stock financial data.
-    """
-    threads = polygon()
-
-    for thread in threads:
-        first_tweet_id = None
-        for tweet in thread:
-            first_tweet_id = send_tweet(tweet, reply_to_id=first_tweet_id)
-
-# ---------------------------- SEC EARNINGS WATCHER (REAL-TIME) ----------------------------
-def sec_earnings_watcher():
-    """
-    Continuously checks for SEC earnings reports and posts them in real-time.
-    """
-    logger.info("Starting SEC Earnings Watcher...")
-
-    reported_tickers = set()
-    today = datetime.today().strftime('%Y-%m-%d')
-
-    earnings_calendar = get_earnings(limit=50)
-    tickers_to_watch = [e['Ticker'] for e in earnings_calendar if e['Date Reporting'] == today]
-
-    logger.info(f"Watching tickers: {tickers_to_watch}")
-
-    while True:
-        for ticker in tickers_to_watch:
-            if ticker in reported_tickers:
-                continue
-
-            sec_data = get_sec_financial_data(ticker)
-
-            if not sec_data:
-                logger.info(f"{ticker} has not reported yet.")
-                continue
-
-            logger.info(f"{ticker} has reported! Posting thread...")
-
-            announcement = f"${ticker} HAS JUST REPORTED EARNINGS"
-            first_tweet_id = send_tweet(announcement)
-
-            eps_estimate = next((e['EPS Estimate'] for e in earnings_calendar if e['Ticker'] == ticker), "N/A")
-            revenue_estimate = next((e['Revenue Forecast'] for e in earnings_calendar if e['Ticker'] == ticker), "N/A")
-
-            reported_eps = sec_data['eps'][0] if sec_data['eps'] else "N/A"
-            reported_revenue = sec_data['revenue'][0] if sec_data['revenue'] else "N/A"
-
-            results_tweet = earnings_results(ticker, eps_estimate, reported_eps, revenue_estimate, reported_revenue)
-            results_tweet_id = send_tweet(results_tweet, reply_to_id=first_tweet_id)
-
-            tweet_thread = sec_tweet_thread(sec_data)
-
-            current_tweet_id = results_tweet_id
-            for tweet in tweet_thread:
-                current_tweet_id = send_tweet(tweet, reply_to_id=current_tweet_id)
-                time.sleep(2)
-
-            reported_tickers.add(ticker)
-
-        time.sleep(60)
-
 # ---------------------------- SCHEDULING TASKS ----------------------------
 def tweet_scheduler():
     """
     Main function for the tweet scheduler.
     """
     # Pre-Market Earnings Tweets
-    schedule.every().day.at("07:00").do(post_pre_market_earnings_tweet)
+    schedule.every().day.at("02:53").do(post_pre_market_earnings_tweet)
 
     # After-Hours Earnings Tweets
-    schedule.every().day.at("12:00").do(post_after_hours_earnings_tweet)
+    schedule.every().day.at("02:53").do(post_after_hours_earnings_tweet)
 
     # Trading Holidays Notification
-    schedule.every().day.at("20:00").do(post_trading_holiday)
+    schedule.every().day.at("02:53").do(post_trading_holiday)
 
     # Fear & Greed Index Tweet
-    schedule.every().day.at("19:00").do(post_fear_sentiment_tweet)
+    schedule.every().day.at("02:53").do(post_fear_sentiment_tweet)
 
     # Weekly Economic Event Tweet (Sunday)
-    schedule.every().sunday.at("20:00").do(post_weekly_econ_tweet)
+    schedule.every().day.at("02:53").do(post_weekly_econ_tweet)
 
     # Daily Economic Event Recap Tweet
-    schedule.every().day.at("22:00").do(post_daily_econ_tweet)
-
-    # Polygon Financial Threads
-    schedule.every().sunday.at("20:00").do(post_polygon_threads)
+    schedule.every().day.at("02:53").do(post_daily_econ_tweet)
 
     logger.info("Twitter Bot Scheduler started. Tasks are scheduled and running...")
 
@@ -299,10 +229,7 @@ def run_bot():
     Runs both the tweet scheduler and SEC earnings watcher concurrently.
     """
     scheduler_thread = threading.Thread(target=tweet_scheduler)
-    sec_watcher_thread = threading.Thread(target=sec_earnings_watcher)
 
     scheduler_thread.start()
-    sec_watcher_thread.start()
 
     scheduler_thread.join()
-    sec_watcher_thread.join()
