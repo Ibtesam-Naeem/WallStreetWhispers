@@ -1,5 +1,3 @@
-# ---------------------------- TWEET FORMATTING FUNCTIONS ----------------------------
-
 # ---------------------------- EARNINGS REMINDER TWEETS ----------------------------
 def premarket_earnings_tweet(earnings_list):
     """
@@ -19,7 +17,6 @@ def premarket_earnings_tweet(earnings_list):
 
     return tweet
 
-
 def afterhrs_earnings_tweet(earnings_list):
     """
     Formats the After-Hours earnings tweet.
@@ -38,7 +35,6 @@ def afterhrs_earnings_tweet(earnings_list):
 
     return tweet
 
-
 # ---------------------------- EARNINGS REPORTED TWEETS ----------------------------
 def earnings_results(ticker, eps_estimate, reported_eps, revenue_estimate, reported_revenue):
     """
@@ -56,32 +52,11 @@ def earnings_results(ticker, eps_estimate, reported_eps, revenue_estimate, repor
 
     return tweet
 
-
-# ---------------------------- SEC FINANCIAL THREADS ---------------------------- #
-def sec_tweet_thread(tweet_data):
-    """
-    Format SEC financial data into a tweet thread.
-    """
-    if not tweet_data:
-        return []
-
-    ticker = tweet_data["ticker"]
-
-    tweets = [
-        f"{ticker} QUARTERLY REVENUE (Last 8 Quarters)\n\n" + "\n".join(tweet_data["revenue"]),
-        f"{ticker} NET INCOME (Last 8 Quarters)\n\n" + "\n".join(tweet_data["net_income"]),
-        f"{ticker} EPS (Basic, Last 8 Quarters)\n\n" + "\n".join(tweet_data["eps"])
-    ]
-
-    return tweets
-
-
 # ---------------------------- ECON REMINDER TWEETS ----------------------------
 def econ_reminder_tomorrow(econ_list):
     """
-    Formats the Economic Event tweet for TOMORROW
+    Formats the Economic Event tweet for TOMORROW.
     """
-
     if not econ_list:
         return None
 
@@ -92,12 +67,10 @@ def econ_reminder_tomorrow(econ_list):
 
     return tweet
 
-
 def econ_reminder_weekly(econ_list):
     """
-    Formats the Weekly Economic Event tweet
+    Formats the Weekly Economic Event tweet.
     """
-
     if not econ_list:
         return None
 
@@ -105,9 +78,9 @@ def econ_reminder_weekly(econ_list):
 
     for event in econ_list:
         tweet += f"- {event['Event']}\n"
+        tweet += f"  Date: {event['Date']}\n"
 
     return tweet
-
 
 # ---------------------------- PRE-MARKET MOVERS TWEETS ----------------------------
 def pre_market_gainer(gainers_list):
@@ -124,7 +97,6 @@ def pre_market_gainer(gainers_list):
 
     return tweet
 
-
 def pre_market_losers(losers_list):
     """
     Formats the Pre-Market Losers tweet.
@@ -138,7 +110,6 @@ def pre_market_losers(losers_list):
         tweet += f"- {stock['Ticker']} last down {stock['Pre-Market Change']}\n"
 
     return tweet
-
 
 # ---------------------------- FEAR & GREED INDEX TWEETS ----------------------------
 def fear_sentiment(greed_data):
@@ -167,7 +138,6 @@ def fear_sentiment(greed_data):
     )
 
     return tweet
-
 
 # ---------------------------- TRADING HOLIDAY TWEETS ----------------------------
 def trading_holiday(closing_dates):

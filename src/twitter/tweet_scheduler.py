@@ -1,5 +1,4 @@
 # ---------------------------- TWITTER SCHEDULER ----------------------------
-
 import time
 import threading
 import schedule
@@ -195,27 +194,27 @@ def post_after_hours_earnings_tweet():
     )
 
 # ---------------------------- SCHEDULING TASKS ----------------------------
-def tweet_scheduler():
+def run_bot():
     """
     Main function for the tweet scheduler.
     """
-    # Pre-Market Earnings Tweets
-    schedule.every().day.at("02:53").do(post_pre_market_earnings_tweet)
+    # Pre-Market Earnings Tweets – 1:49 AM
+    schedule.every().day.at("02:00").do(post_pre_market_earnings_tweet)
 
-    # After-Hours Earnings Tweets
-    schedule.every().day.at("02:53").do(post_after_hours_earnings_tweet)
+    # After-Hours Earnings Tweets – 1:49 AM
+    schedule.every().day.at("02:00").do(post_after_hours_earnings_tweet)
 
-    # Trading Holidays Notification
-    schedule.every().day.at("02:53").do(post_trading_holiday)
+    # Trading Holidays Notification – 1:49 AM
+    schedule.every().day.at("02:00").do(post_trading_holiday)
 
-    # Fear & Greed Index Tweet
-    schedule.every().day.at("02:53").do(post_fear_sentiment_tweet)
+    # Fear & Greed Index Tweet – 1:49 AM
+    schedule.every().day.at("02:00").do(post_fear_sentiment_tweet)
 
-    # Weekly Economic Event Tweet (Sunday)
-    schedule.every().day.at("02:53").do(post_weekly_econ_tweet)
+    # Weekly Economic Event Tweet (Sunday only) – 1:49 AM
+    schedule.every().sunday.at("02:00").do(post_weekly_econ_tweet)
 
-    # Daily Economic Event Recap Tweet
-    schedule.every().day.at("02:53").do(post_daily_econ_tweet)
+    # Daily Economic Event Recap Tweet – 1:49 AM
+    schedule.every().day.at("02:00").do(post_daily_econ_tweet)
 
     logger.info("Twitter Bot Scheduler started. Tasks are scheduled and running...")
 
@@ -223,13 +222,3 @@ def tweet_scheduler():
         schedule.run_pending()
         time.sleep(30)
 
-# ---------------------------- MAIN RUNNER ----------------------------
-def run_bot():
-    """
-    Runs both the tweet scheduler and SEC earnings watcher concurrently.
-    """
-    scheduler_thread = threading.Thread(target=tweet_scheduler)
-
-    scheduler_thread.start()
-
-    scheduler_thread.join()

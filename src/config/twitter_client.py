@@ -21,4 +21,7 @@ client = tweepy.Client(
 )
 
 def get_twitter_client():
+    """
+    Returns the Twitter API client.
+    """
     return client 

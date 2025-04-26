@@ -9,6 +9,7 @@ def format_number(num):
         if num == int(num):
             return f"{int(num):,}"
         return f"{num:,.2f}"
+    
     except (ValueError, TypeError):
         return "N/A"
 
@@ -20,5 +21,7 @@ def format_eps(eps):
         return "N/A"
     try:
         return f"{float(eps):.2f}"
+    
     except (ValueError, TypeError):
         return "N/A"
+o

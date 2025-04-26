@@ -2,13 +2,13 @@
 
 import os
 import requests
-from typing import List, Dict, Any
 from dotenv import load_dotenv
 
 load_dotenv()
 
 BACKEND_URL = os.getenv("BACKEND_URL")
 
+# ---------------------------- ECON EVENTS ----------------------------
 def get_economic_events(limit: int = 10):
     """
     Get the economic events from the backend API
@@ -20,6 +20,7 @@ def get_economic_events(limit: int = 10):
     except Exception as e:
         raise Exception(f"Failed to fetch economic events: {e}")
 
+# ---------------------------- EARNINGS CALENDAR ----------------------------
 def get_earnings(limit: int = 10):
     """
     Get earnings data from the backend API
@@ -32,6 +33,7 @@ def get_earnings(limit: int = 10):
     except Exception as e:
         raise Exception(f"Failed to fetch earnings: {e}")
 
+# ---------------------------- FEAR GREED ----------------------------
 def get_fear_greed():
     """
     Get fear & greed index from the backend API
@@ -39,16 +41,12 @@ def get_fear_greed():
     try:
         response = requests.get(f"{BACKEND_URL}/fear-greed")
         response.raise_for_status()
-        data = response.json()["data"]
-        
-        if isinstance(data, list) and len(data) > 0:
-            return data[0]
-        else:
-            return data
-
+        return response.json()["data"]
+    
     except Exception as e:
         raise Exception(f"Failed to fetch fear & greed index: {e}")
 
+# ---------------------------- TRADING HOLIDAY ----------------------------
 def get_trading_holidays():
     """
     Gets the trading holidays from the backend API
