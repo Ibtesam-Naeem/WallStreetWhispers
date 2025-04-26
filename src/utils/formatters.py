@@ -24,4 +24,3 @@ def format_eps(eps):
     
     except (ValueError, TypeError):
         return "N/A"
-o
