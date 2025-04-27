@@ -4,6 +4,7 @@ idna==3.10
 oauthlib==3.2.2
 requests==2.32.3
 requests-oauthlib==2.0.0
+schedule==1.2.1
 sec-api==1.0.30
 tweepy==4.15.0
 urllib3==2.3.0

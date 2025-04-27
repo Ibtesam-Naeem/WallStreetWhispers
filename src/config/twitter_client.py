@@ -2,15 +2,12 @@
 
 import os
 import tweepy
-from dotenv import load_dotenv
 
-load_dotenv()
-
-API_KEY = os.getenv("API_KEY")
-API_SECRET = os.getenv("API_SECRET")
-ACCESS_TOKEN = os.getenv("ACCESS_TOKEN")
-ACCESS_TOKEN_SECRET = os.getenv("ACCESS_TOKEN_SECRET")
-BEARER_TOKEN = os.getenv("BEARER_TOKEN")
+API_KEY = os.environ["TWITTER_API_KEY"]
+API_SECRET = os.environ["TWITTER_API_SECRET"]
+ACCESS_TOKEN = os.environ["TWITTER_ACCESS_TOKEN"]
+ACCESS_TOKEN_SECRET = os.environ["TWITTER_ACCESS_TOKEN_SECRET"]
+BEARER_TOKEN = os.environ["TWITTER_BEARER_TOKEN"]
 
 client = tweepy.Client(
     bearer_token=BEARER_TOKEN,

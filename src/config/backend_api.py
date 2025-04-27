@@ -1,12 +1,8 @@
 #---------------------BACKEND API CLIENT---------------------#
-
 import os
 import requests
-from dotenv import load_dotenv
 
-load_dotenv()
-
-BACKEND_URL = os.getenv("BACKEND_URL")
+BACKEND_URL = os.environ["BACKEND_API_URL"]
 
 # ---------------------------- ECON EVENTS ----------------------------
 def get_economic_events(limit: int = 10):
@@ -17,8 +13,10 @@ def get_economic_events(limit: int = 10):
         response = requests.get(f"{BACKEND_URL}/economic-events", params={"limit": limit})
         response.raise_for_status()
         return response.json()["data"]
+    
     except Exception as e:
-        raise Exception(f"Failed to fetch economic events: {e}")
+        print(f"Failed to fetch economic events: {e}")
+        return None
 
 # ---------------------------- EARNINGS CALENDAR ----------------------------
 def get_earnings(limit: int = 10):
@@ -31,7 +29,8 @@ def get_earnings(limit: int = 10):
         return response.json()["data"]
     
     except Exception as e:
-        raise Exception(f"Failed to fetch earnings: {e}")
+        print(f"Failed to fetch earnings: {e}")
+        return None
 
 # ---------------------------- FEAR GREED ----------------------------
 def get_fear_greed():
@@ -44,7 +43,8 @@ def get_fear_greed():
         return response.json()["data"]
     
     except Exception as e:
-        raise Exception(f"Failed to fetch fear & greed index: {e}")
+        print(f"Failed to fetch fear & greed index: {e}")
+        return None
 
 # ---------------------------- TRADING HOLIDAY ----------------------------
 def get_trading_holidays():
@@ -57,5 +57,6 @@ def get_trading_holidays():
         return response.json()["data"]
     
     except Exception as e:
-        raise Exception(f"Failed to fetch trading holidays: {e}") 
+        print(f"Failed to fetch trading holidays: {e}")
+        return None 
     
