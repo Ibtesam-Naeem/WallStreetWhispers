@@ -3,20 +3,39 @@
 
 This project automates the process of tweeting about **earnings reports**, **economic events**, and **market updates** using **Tweepy** and the **Twitter/X API**. It fetches real-time and historical data from **FinancialSuite-Backend**, **Polygon API**, and **SEC API**, formats it into clean, informative tweets, and posts them automatically.
 
-The bot runs on a scheduled system and continuously monitors **real-time earnings reports** via the SEC API to deliver timely tweets as soon as earnings are released.
+The bot runs on **AWS Lambda** with scheduled triggers via EventBridge, continuously monitoring **real-time earnings reports** via the SEC API to deliver timely tweets as soon as earnings are released.
 
 ---
 
 ## 🌐 Architecture
 
-This Twitter bot is part of the **FinancialSuite Ecosystem**, designed for **modularity**, **scalability**, and **automation**.
+This Twitter bot is part of the **FinancialSuite Ecosystem**, designed for **modularity**, **scalability**, and **automation**. It's deployed on AWS Lambda for serverless execution and cost-effective operation.
 
 ```
 FinancialSuite Ecosystem
 ├── FinancialSuite-Backend: Collects & processes financial data
-├── FinancialSuite-TwitterBot: Formats and tweets the data automatically
+├── FinancialSuite-TwitterBot: AWS Lambda function for automated tweets
+│   ├── Lambda Handler: Manages different tweet types
+│   └── EventBridge: Schedules tweet tasks
 └── SEC/Polygon API integrations: Provide real-time and historical financial data
 ```
+
+### AWS Lambda Configuration
+The bot is configured as a Lambda function with the following components:
+- **Runtime**: Python 3.13
+- **Handler**: lambda_function.lambda_handler
+- **Memory**: 128 MB
+- **Timeout**: 3 minutes
+- **Triggers**: AWS EventBridge (CloudWatch Events) for scheduling
+
+### Environment Variables
+The Lambda function requires the following environment variables:
+- `TWITTER_API_KEY`: Twitter API Key
+- `TWITTER_API_SECRET`: Twitter API Secret
+- `TWITTER_ACCESS_TOKEN`: Twitter Access Token
+- `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
+- `TWITTER_BEARER_TOKEN`: Twitter Bearer Token
+- `BACKEND_API_URL`: FinancialSuite Backend API URL
 
 ---
 
@@ -157,95 +176,3 @@ $TSLA QUARTERLY REVENUE (Last 8 Quarters)
 2022 Q2: $19.6B
 2022 Q1: $18.7B
 ```
-
-**Thread 2: Net Income**
-```
-$TSLA NET INCOME (Last 8 Quarters)
-
-2023 Q4: $3.2B
-2023 Q3: $3.0B
-2023 Q2: $2.8B
-2023 Q1: $2.5B
-2022 Q4: $2.4B
-2022 Q3: $2.3B
-2022 Q2: $2.0B
-2022 Q1: $1.9B
-```
-
-**Thread 3: EPS (Basic)**
-```
-$TSLA EPS (Basic, Last 8 Quarters)
-
-2023 Q4: $1.30
-2023 Q3: $1.20
-2023 Q2: $1.10
-2023 Q1: $1.00
-2022 Q4: $0.90
-2022 Q3: $0.85
-2022 Q2: $0.75
-2022 Q1: $0.70
-```
-
----
-
-## 🗂️ Project Workflow
-
-### 🕖 Daily Schedule:
-| Time     | Task                                      |
-|----------|-------------------------------------------|
-| 7:00 AM  | Pre-Market Earnings Reminder Tweet        |
-| 12:00 PM | After-Hours Earnings Reminder Tweet       |
-| 7:00 PM  | Fear & Greed Index Tweet                  |
-| 8:00 PM  | Trading Holiday Notification Tweet        |
-| 10:00 PM | Daily Economic Events Tweet               |
-| 8:00 PM  | Polygon Financial Threads                 |
-
-### 🕗 Weekly (Sunday)
-| Time     | Task                                      |
-|----------|-------------------------------------------|
-| 8:00 PM  | Weekly Earnings & Economic Outlook Tweet  |
-
-### 🔄 Real-Time Continuous Monitoring
-| Task                                           |
-|------------------------------------------------|
-| Monitor SEC filings (10-Q) and tweet earnings reports immediately. |
-
----
-
-## 🔗 Data Sources
-
-- **FinancialSuite-Backend API**
-- **Polygon.io API**
-- **SEC.gov API**
-
----
-
-## 🏗️ Project Structure
-
-```
-src/
-├── config/
-│   ├── backend_api.py
-│   ├── logger.py
-│   ├── twitter_client.py
-├── data/
-│   ├── polygon_financials.py
-│   ├── sec_results.py
-├── twitter/
-│   ├── tweet_formatting.py
-├── utils/
-│   ├── helpers.py
-├── main.py
-```
-
----
-
-## ⚙️ Technologies Used
-
-- **API Clients:** `requests`
-- **Twitter API:** `tweepy`
-- **Scheduling:** `schedule`
-- **Real-Time Earnings Monitoring:** `SEC API`
-- **Financial Data Threads:** `Polygon API`
-- **Environment Management:** `dotenv`
-- **Logging:** `logging`
