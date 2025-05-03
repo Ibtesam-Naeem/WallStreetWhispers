@@ -173,7 +173,7 @@ def post_trading_holiday():
             tweet = trading_holiday(tomorrow_holidays)
             send_tweet(tweet)
         else:
-            logger.info(f"No trading holidays tomorrow ({tomorrow})")
+            logger.info(f"The stock market is operating under normal hours. ({tomorrow})")
 
     except Exception as e:
         logger.error(f"Error posting trading holiday tweet: {e}")
@@ -198,27 +198,28 @@ def run_bot():
     """
     Main function for the tweet scheduler.
     """
-    # Pre-Market Earnings Tweets – 1:49 AM
-    schedule.every().day.at("02:00").do(post_pre_market_earnings_tweet)
+    # Pre-Market Earnings Tweets – 6:00 AM
+    schedule.every().day.at("06:00").do(post_pre_market_earnings_tweet)
 
-    # After-Hours Earnings Tweets – 1:49 AM
-    schedule.every().day.at("02:00").do(post_after_hours_earnings_tweet)
+    # Daily Economic Event Recap Tweet – 6:30 AM
+    schedule.every().day.at("06:30").do(post_daily_econ_tweet)
 
-    # Trading Holidays Notification – 1:49 AM
-    schedule.every().day.at("02:00").do(post_trading_holiday)
+    # Fear & Greed Index Tweet – hourly (every hour on the hour)
+    schedule.every().hour.at(":00").do(post_fear_sentiment_tweet)
 
-    # Fear & Greed Index Tweet – 1:49 AM
-    schedule.every().day.at("02:00").do(post_fear_sentiment_tweet)
+    # Midday Update – 12:00 PM
+    schedule.every().day.at("12:00").do(post_after_hours_earnings_tweet)
 
-    # Weekly Economic Event Tweet (Sunday only) – 1:49 AM
-    schedule.every().sunday.at("02:00").do(post_weekly_econ_tweet)
+    # After-Hours Earnings Tweets – 8:00 PM
+    schedule.every().day.at("20:00").do(post_after_hours_earnings_tweet)
 
-    # Daily Economic Event Recap Tweet – 1:49 AM
-    schedule.every().day.at("02:00").do(post_daily_econ_tweet)
+    # Trading Holidays Notification – 8:00 PM
+    schedule.every().day.at("20:00").do(post_trading_holiday)
 
     logger.info("Twitter Bot Scheduler started. Tasks are scheduled and running...")
 
     while True:
         schedule.run_pending()
         time.sleep(30)
+
 

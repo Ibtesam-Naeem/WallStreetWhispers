@@ -9,12 +9,13 @@ from twitter.tweet_scheduler import (
 import logging
 
 logger = logging.getLogger()
+
 logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
     """
     AWS Lambda handler that dispatches to the correct task 
-    based on the event payload.
+    based on the event.
     """
     task = event.get("task")
     
@@ -32,7 +33,7 @@ def lambda_handler(event, context):
         elif task == "daily_econ":
             post_daily_econ_tweet()
         else:
-            raise ValueError(f"Unknown or missing task: {task}")
+            raise ValueError(f"Unknown/missing task: {task}")
 
         logger.info(f"Successfully ran task: {task}")
 
