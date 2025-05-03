@@ -198,27 +198,15 @@ def run_bot():
     """
     Main function for the tweet scheduler.
     """
-    # Pre-Market Earnings Tweets – 1:49 AM
-    schedule.every().day.at("02:00").do(post_pre_market_earnings_tweet)
+    logger.info("Twitter Bot started. Posting tweets immediately...")
 
-    # After-Hours Earnings Tweets – 1:49 AM
-    schedule.every().day.at("02:00").do(post_after_hours_earnings_tweet)
-
-    # Trading Holidays Notification – 1:49 AM
-    schedule.every().day.at("02:00").do(post_trading_holiday)
-
-    # Fear & Greed Index Tweet – 1:49 AM
-    schedule.every().day.at("02:00").do(post_fear_sentiment_tweet)
-
-    # Weekly Economic Event Tweet (Sunday only) – 1:49 AM
-    schedule.every().sunday.at("02:00").do(post_weekly_econ_tweet)
-
-    # Daily Economic Event Recap Tweet – 1:49 AM
-    schedule.every().day.at("02:00").do(post_daily_econ_tweet)
-
-    logger.info("Twitter Bot Scheduler started. Tasks are scheduled and running...")
-
-    while True:
-        schedule.run_pending()
-        time.sleep(30)
+    # Post all tweets immediately
+    post_pre_market_earnings_tweet()
+    post_after_hours_earnings_tweet()
+    post_trading_holiday()
+    post_fear_sentiment_tweet()
+    post_weekly_econ_tweet()
+    post_daily_econ_tweet()
+    
+    logger.info("All tweets have been posted.")
 
