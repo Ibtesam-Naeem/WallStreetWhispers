@@ -1,7 +1,4 @@
 # ---------------------------- TWITTER SCHEDULER ----------------------------
-import time
-import threading
-import schedule
 from datetime import datetime, timedelta, timezone
 
 from config.logger import setup_logger
@@ -63,7 +60,7 @@ def post_earnings_tweet(earnings_time, formatter_func, log_context):
     """
     try:
         today = datetime.today().strftime('%Y-%m-%d')
-        earnings_data = get_earnings(limit=50)
+        earnings_data = get_earnings(limit=None)
 
         filtered_earnings = [
             e for e in earnings_data
@@ -71,7 +68,7 @@ def post_earnings_tweet(earnings_time, formatter_func, log_context):
         ]
 
         sorted_earnings = sort_by_market_cap(filtered_earnings)[:5]
-
+ 
         if sorted_earnings:
             tweet = formatter_func(sorted_earnings)
             send_tweet(tweet)
