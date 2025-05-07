@@ -1,7 +1,7 @@
 def parse_market_cap(market_cap_str):
     """
     Parses a market cap string into a numeric value.
-    Supports formats like $1.2B, $500M, etc.
+    Supports formats like $1.2B, $500M...
     """
     if not market_cap_str:
         return 0
