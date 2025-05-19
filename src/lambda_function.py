@@ -12,7 +12,7 @@ logger = logging.getLogger()
 
 logger.setLevel(logging.INFO)
 
-def lambda_handler(event, context):
+def lambda_handler(event):
     """
     AWS Lambda handler that dispatches to the correct task 
     based on the event.

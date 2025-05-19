@@ -53,6 +53,14 @@ def earnings_results(ticker, eps_estimate, reported_eps, revenue_estimate, repor
     return tweet
 
 # ---------------------------- ECON REMINDER TWEETS ----------------------------
+def get_country_flag(country):
+    """
+    Returns the appropriate flag emoji based on the country.
+    """
+    if country.lower() == "canada":
+        return "🇨🇦"
+    return "🇺🇸"
+
 def econ_reminder_tomorrow(econ_list):
     """
     Formats the Economic Event tweet for TOMORROW.
@@ -63,7 +71,12 @@ def econ_reminder_tomorrow(econ_list):
     tweet = "Major Economic events to watch for TOMORROW:\n\n"
 
     for event in econ_list:
-        tweet += f"- {event['Event']}\n"
+        flag = get_country_flag(event.get('Country', 'US'))
+        time = event.get('Time', 'N/A')
+        forecast = event.get('Forecast', 'N/A')
+        tweet += f"{flag} {event['Event']}\n"
+        tweet += f"  Time: {time}\n"
+        tweet += f"  Forecast: {forecast}\n\n"
 
     return tweet
 
@@ -77,8 +90,15 @@ def econ_reminder_weekly(econ_list):
     tweet = "Weekly Economic Calendar:\n\n"
 
     for event in econ_list:
-        tweet += f"- {event['Event']}\n"
-        tweet += f"  Date: {event['Date']}\n"
+        flag = get_country_flag(event.get('Country', 'US'))
+        time = event.get('Time', 'N/A')
+        forecast = event.get('Forecast', 'N/A')
+        date = event['Date'].split('T')[0]
+        
+        tweet += f"{flag} {event['Event']}\n"
+        tweet += f"  Date: {date}\n"
+        tweet += f"  Time: {time}\n"
+        tweet += f"  Forecast: {forecast}\n\n"
 
     return tweet
 
