@@ -17,7 +17,6 @@ from config.backend_api import (
 from twitter.tweet_formatting import (
     premarket_earnings_tweet,
     afterhrs_earnings_tweet,
-    earnings_results,
     econ_reminder_tomorrow,
     econ_reminder_weekly,
     fear_sentiment,
@@ -84,7 +83,7 @@ def post_earnings_tweet(earnings_time, formatter_func, log_context):
 # ---------------------------- ECONOMIC EVENT TWEETS ----------------------------
 def post_daily_econ_tweet():
     """
-    Posts economic events for tomorrow.
+    Posts economic events for Tomorrow (in UTC).
     """
     try:
         economic_events = get_economic_events()
@@ -93,18 +92,18 @@ def post_daily_econ_tweet():
             logger.info("No economic events available.")
             return
 
-        tomorrow = (datetime.now(timezone.utc) + timedelta(days=1)).date()
+        today = datetime.now(timezone.utc).date()
 
-        tomorrow_events = [
+        today_events = [
             e for e in economic_events
-            if datetime.strptime(e["Date"].split("T")[0], "%Y-%m-%d").date() == tomorrow
+            if datetime.strptime(e["Date"].split("T")[0], "%Y-%m-%d").date() == today
         ]
 
-        if tomorrow_events:
-            tweet = econ_reminder_tomorrow(tomorrow_events)
+        if today_events:
+            tweet = econ_reminder_tomorrow(today_events)
             send_tweet(tweet)
         else:
-            logger.info(f"No economic events scheduled for {tomorrow}")
+            logger.info(f"No economic events scheduled for {today}")
 
     except Exception as e:
         logger.error(f"Error posting daily economic tweet: {e}")

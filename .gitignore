@@ -6,3 +6,4 @@ venv/
 *.pyc
 package/
 lambda-deploy.zip
+deploy-package.zip

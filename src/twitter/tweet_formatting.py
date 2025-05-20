@@ -63,7 +63,7 @@ def get_country_flag(country):
 
 def econ_reminder_tomorrow(econ_list):
     """
-    Formats the Economic Event tweet for TOMORROW.
+    Formats the Economic Event tweet for TODAY.
     """
     if not econ_list:
         return None
@@ -74,9 +74,11 @@ def econ_reminder_tomorrow(econ_list):
         flag = get_country_flag(event.get('Country', 'US'))
         time = event.get('Time', 'N/A')
         forecast = event.get('Forecast', 'N/A')
+        prior = event.get('Prior', 'N/A')
         tweet += f"{flag} {event['Event']}\n"
         tweet += f"  Time: {time}\n"
-        tweet += f"  Forecast: {forecast}\n\n"
+        tweet += f"  Forecast: {forecast}\n"
+        tweet += f"  Prior: {prior}\n\n"
 
     return tweet
 
@@ -93,12 +95,14 @@ def econ_reminder_weekly(econ_list):
         flag = get_country_flag(event.get('Country', 'US'))
         time = event.get('Time', 'N/A')
         forecast = event.get('Forecast', 'N/A')
+        prior = event.get('Prior', 'N/A')
         date = event['Date'].split('T')[0]
         
         tweet += f"{flag} {event['Event']}\n"
         tweet += f"  Date: {date}\n"
         tweet += f"  Time: {time}\n"
-        tweet += f"  Forecast: {forecast}\n\n"
+        tweet += f"  Forecast: {forecast}\n"
+        tweet += f"  Prior: {prior}\n\n"
 
     return tweet
 
