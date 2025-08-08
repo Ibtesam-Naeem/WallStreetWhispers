@@ -1,4 +1,4 @@
-# FinancialSuite TwitterBot
+# WallStreetWhispers
 ### Automated Earnings, Economic Events, and Market Update Tweets
 
 This project automates the process of tweeting about **earnings reports**, **economic events**, and **market updates** using **Tweepy** and the **Twitter/X API**. It fetches real-time and historical data from **FinancialSuite-Backend**, **Polygon API**, and **SEC API**, formats it into clean, informative tweets, and posts them automatically.
