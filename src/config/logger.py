@@ -3,7 +3,8 @@ import os
 
 def setup_logger(name=None, level=logging.INFO):
     """
-    Sets up a simple logger that writes everything to both console and file.
+    Sets up a Lambda-compatible logger that only writes to console.
+    Lambda has a read-only filesystem except for /tmp, so we avoid file operations.
     """
     logger = logging.getLogger(name)
     logger.setLevel(level)
@@ -11,25 +12,13 @@ def setup_logger(name=None, level=logging.INFO):
     if logger.hasHandlers():
         logger.handlers.clear()
 
-    logs_dir = "logs"
-    if not os.path.exists(logs_dir):
-        os.makedirs(logs_dir)
-
     formatter = logging.Formatter(
-        fmt="%(asctime)s | %(message)s",
+        fmt="%(asctime)s | %(name)s | %(levelname)s | %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S"
     )
 
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
-
-    file_handler = logging.FileHandler(
-        filename=os.path.join(logs_dir, "all_results.log"),
-        mode='a',
-        encoding='utf-8'
-    )
-    file_handler.setFormatter(formatter)
-    logger.addHandler(file_handler)
 
     return logger

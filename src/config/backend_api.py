@@ -7,6 +7,9 @@ import logging
 load_dotenv()
 
 BACKEND_URL = os.getenv("BACKEND_URL")
+if not BACKEND_URL:
+    raise ValueError("BACKEND_URL environment variable is required")
+
 logger = logging.getLogger("TwitterBotScheduler")
 
 # ---------------------------- ECON EVENTS ----------------------------

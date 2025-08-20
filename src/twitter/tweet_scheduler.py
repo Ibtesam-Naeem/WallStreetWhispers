@@ -1,17 +1,17 @@
 # ---------------------------- TWITTER SCHEDULER ----------------------------
 from datetime import datetime, timedelta, timezone
 
-from config.logger import setup_logger
-from config.twitter_client import get_twitter_client
+from src.config.logger import setup_logger
+from src.config.twitter_client import get_twitter_client
 
-from config.backend_api import (
+from src.config.backend_api import (
     get_economic_events,
     get_earnings,
     get_fear_greed,
     get_trading_holidays
 )
 
-from twitter.tweet_formatting import (
+from src.twitter.tweet_formatting import (
     premarket_earnings_tweet,
     afterhrs_earnings_tweet,
     earnings_results,
@@ -21,7 +21,7 @@ from twitter.tweet_formatting import (
     trading_holiday
 )
 
-from utils.helpers import sort_by_market_cap
+from src.utils.helpers import sort_by_market_cap
 
 # ---------------------------- LOGGER SETUP ----------------------------
 logger = setup_logger("TwitterBotScheduler")

@@ -1,4 +1,4 @@
-from twitter.tweet_scheduler import (
+from src.twitter.tweet_scheduler import (
     post_pre_market_earnings_tweet,
     post_after_hours_earnings_tweet,
     post_fear_sentiment_tweet,
