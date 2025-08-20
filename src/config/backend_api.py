@@ -1,5 +1,4 @@
 #---------------------BACKEND API CLIENT---------------------#
-
 import os
 import requests
 from dotenv import load_dotenv
@@ -49,16 +48,23 @@ def get_earnings(limit: int = 10):
 # ---------------------------- FEAR GREED ----------------------------
 def get_fear_greed():
     """
-    Get fear & greed index from the backend API
+    Get fear & greed index from the backend API - only need the latest value
     """
     try:
         url = f"{BACKEND_URL}/fear-greed"
         logger.info(f"Fetching fear & greed from: {url}")
-        response = requests.get(url)
+        response = requests.get(url, params={"limit": 1})
         logger.info(f"Response status: {response.status_code}")
         logger.info(f"Response content: {response.text[:200]}...")
         response.raise_for_status()
-        return response.json()["data"]
+        
+        data = response.json()["data"]
+        
+        if isinstance(data, list) and len(data) > 1:
+            logger.info(f"API returned {len(data)} records, using only the first one")
+            data = data[0] if data else None
+        
+        return data
     
     except Exception as e:
         logger.error(f"Failed to fetch fear & greed index: {str(e)}")
@@ -67,12 +73,12 @@ def get_fear_greed():
 # ---------------------------- TRADING HOLIDAY ----------------------------
 def get_trading_holidays():
     """
-    Gets the trading holidays from the backend API
+    Gets the trading holidays from the backend API - only need upcoming ones
     """
     try:
         url = f"{BACKEND_URL}/market-holidays"
         logger.info(f"Fetching trading holidays from: {url}")
-        response = requests.get(url)
+        response = requests.get(url, params={"limit": 10})
         logger.info(f"Response status: {response.status_code}")
         logger.info(f"Response content: {response.text[:200]}...")
         response.raise_for_status()
